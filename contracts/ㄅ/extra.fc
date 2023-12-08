@@ -1,0 +1,21 @@
+(slice, slice, int) dict_get_min?(cell dict, int key_len) asm (-> 1 0 2) "DICTMIN" "NULLSWAPIFNOT2";
+(slice, slice, int) dict_get_next?(cell dict, int key_len, slice pivot) asm(pivot dict key_len -> 1 0 2) "DICTGETNEXT" "NULLSWAPIFNOT2";
+
+(slice, int, int) tact_dict_get_min?(cell dict, int key_len) {
+    var(key, value, f) = dict_get_min?(dict,key_len);
+    if(f) {
+        return (key, value~load_int(257), f);
+    }
+    else {
+        return (key, -1, f);
+    }
+}
+(slice, int, int) tact_dict_get_next?(cell dict, int key_len, slice pivot) {
+    var(key, value, f) = dict_get_next?(dict, key_len, pivot);
+    if(f) {
+        return (key, value~load_int(257), f);
+    }
+    else {
+        return (key, -1, f);
+    }
+}
